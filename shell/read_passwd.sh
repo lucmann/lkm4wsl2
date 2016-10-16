@@ -17,7 +17,7 @@ do
 	fi
 
 	# Backspace
-	if [[ $CHAR == $'\177' ]]; then
+	if [[ $CHAR = $'\177' ]]; then
 		if [ $CHARCOUNT -gt 0 ]; then
 			CHARCOUNT=$((CHARCOUNT - 1))
 			PROMPT=$'\b \b'
