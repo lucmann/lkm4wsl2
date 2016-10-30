@@ -30,16 +30,12 @@ def my_heart():
 		time.sleep(0.2)
 
 def sigint_handler(signum, frame):
-	global is_sigint_up
-	is_sigint_up = True
+	set_win32cmd_text_color(0x07)
 	print('Catched Interrupt Signal!')
 
 if __name__ == '__main__':
 	signal.signal(signal.SIGINT, sigint_handler)
-	# Python 2.7 undefined HUP
-	# signal.signal(signal.SIGHUP, sigint_handler)
 	signal.signal(signal.SIGTERM, sigint_handler)
-	is_sigint_up = False
 
 	if ('posix' == os.name):
 		print('\033[1;31m')
@@ -47,13 +43,5 @@ if __name__ == '__main__':
 		set_win32cmd_text_color(0x0c)
 
 	while True:
-		try:
-			my_heart()
-			time.sleep(0.3)
-			if is_sigint_up:
-				set_win32cmd_text_color(0x0f)
-				print('Exit')
-				break
-		except KeyboardInterrupt:
-			set_win32cmd_text_color(0x0f)
-			print('Exit')
+		my_heart()
+		time.sleep(0.3)
