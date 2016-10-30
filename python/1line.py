@@ -4,6 +4,7 @@ import os
 import sys
 import time
 import ctypes
+import signal
 
 """
 Windows Stdout Handles
@@ -28,15 +29,31 @@ def my_heart():
 		print('\n'.join([''.join([('LoveLn'[(x-y)%6] if ((x*scale[i][0])**2+(y*scale[i][1])**2-1)**3-(x*scale[i][0])**2*(y*scale[i][1])**3 <= 0 else ' ') for x in range(-30,30)]) for y in range(15,-15,-1)]))
 		time.sleep(0.2)
 
-if __name__ == '__main__':
-	try:
-		if ('posix' == os.name):
-			print('\033[1;31m')
-		else:
-			set_win32cmd_text_color(0x0c)
+def sigint_handler(signum, frame):
+	global is_sigint_up
+	is_sigint_up = True
+	print('Catched Interrupt Signal!')
 
-		while (True):
+if __name__ == '__main__':
+	signal.signal(signal.SIGINT, sigint_handler)
+	# Python 2.7 undefined HUP
+	# signal.signal(signal.SIGHUP, sigint_handler)
+	signal.signal(signal.SIGTERM, sigint_handler)
+	is_sigint_up = False
+
+	if ('posix' == os.name):
+		print('\033[1;31m')
+	else:
+		set_win32cmd_text_color(0x0c)
+
+	while True:
+		try:
 			my_heart()
-		time.sleep(0.3)
-	except Exception:
-		set_win32cmd_text_color(0x0c|0x0a|0x09)
+			time.sleep(0.3)
+			if is_sigint_up:
+				set_win32cmd_text_color(0x0f)
+				print('Exit')
+				break
+		except KeyboardInterrupt:
+			set_win32cmd_text_color(0x0f)
+			print('Exit')
