@@ -1,6 +1,0 @@
-for loop
-awk '{ for (i = 1; i <= 87; i++) { print $i, $(i+87) } }; ' b > bb
-
-command line below outputs the encoding of those modified source files
-
-git status -s -uno | awk '{ print $2 }' | xargs file
