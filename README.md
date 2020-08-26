@@ -1,1 +1,1 @@
-# A Hello World loadable kernel module for WSL2
+# A Hello World Linux kernel module for WSL2
