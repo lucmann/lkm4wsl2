@@ -12,9 +12,9 @@
     It is essential to configure the linux source tree and make some targets before building your own LKM.
     ```bash
     cd /usr/src/kernels/WSL2-Linux-Kernel-linux-msft-wsl-4.19.y
-    make oldconfig && make prepare
-    make scripts    # for /bin/sh: scripts/mod/modpost
-    make modules    # for WARNING: symbol version dump ./Module.symvers is missing
+    zcat /proc/config.gz > .config
+    make -j ${nproc}
+    make -j ${nproc} modules_install
     ```
 ### Cross-create a DKMS debian source package
 00. What is DKMS?
