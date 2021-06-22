@@ -6,12 +6,12 @@
 
 ## Preparation
 ### Build a Hello World LKM base on WSL2 kernel
-00. Download linux-msft-wsl-4.19.y.zip as linux-headers-$(uname -r)
+00. Download linux-msft-wsl-x.y.z.w.tar.gz and untar to `/usr/src/kernels`
 01. Configure the downloaded linux source tree
 
     It is essential to configure the linux source tree and make some targets before building your own LKM.
     ```bash
-    cd /usr/src/kernels/WSL2-Linux-Kernel-linux-msft-wsl-4.19.y
+    cd /usr/src/kernels/WSL2-Linux-Kernel-linux-msft-wsl-x.y.z.w
     zcat /proc/config.gz > .config
     make -j ${nproc}
     make -j ${nproc} modules_install
@@ -33,3 +33,11 @@
     - dpkg
     - debhelper
     - dkms
+
+### Build perf
+```
+cd /usr/src/kernels/WSL2-Linux-Kernel-linux-msft-wsl-x.y.z.w/tools/perf
+make && make install
+cp perf /usr/bin
+```
+
