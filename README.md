@@ -14,7 +14,7 @@
     cd /usr/src/kernels/WSL2-Linux-Kernel-linux-msft-wsl-x.y.z.w
     zcat /proc/config.gz > .config
     make -j ${nproc}
-    make -j ${nproc} modules_install
+    make -j ${nproc} modules_install # will install /lib/modules/$(uname -r)
     ```
 ### Cross-create a DKMS debian source package
 00. What is DKMS?
